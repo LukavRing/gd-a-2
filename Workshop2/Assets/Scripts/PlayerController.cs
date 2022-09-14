@@ -18,17 +18,25 @@ public class PlayerController : MonoBehaviour
     private bool isJumpPressed = false;
     private bool isGrounded = true;
 
+    public float respawnHeight;
+    private Vector3 spawnPoint;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         render = rb.GetComponent<Renderer>();
+        spawnPoint = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (transform.position.y < respawnHeight)
+        {
+            transform.position = spawnPoint;
+            rb.velocity = Vector3.zero;
+        }
     }
 
     private void FixedUpdate()
