@@ -7,9 +7,15 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
 
+    // Movement
     public float speed;
     private float horizontalMovement;
     private float verticalMovement;
+
+    // Jumping
+    public float jumpHeight;
+    private bool isJumpPressed = false;
+    private bool isGrounded = true;
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +31,17 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // movement
         Vector3 movement = new Vector3(horizontalMovement, 0.0f, verticalMovement);
         rb.AddForce(movement * speed);
+
+        // jumping
+        if (isJumpPressed && isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+            isJumpPressed = false;
+            isGrounded = false;
+        }
     }
 
     void OnMove(InputValue movementValue)
@@ -34,5 +49,15 @@ public class PlayerController : MonoBehaviour
         Vector2 movementVector = movementValue.Get<Vector2>();
         horizontalMovement = movementVector.x;
         verticalMovement = movementVector.y;
+    }
+
+    void OnJump()
+    {
+        if (isGrounded) isJumpPressed = true;
+    }
+
+    private void OnCollisionEnter(Collision collider)
+    {
+        isGrounded = true;
     }
 }
