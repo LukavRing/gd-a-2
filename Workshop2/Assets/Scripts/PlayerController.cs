@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
+    private Renderer render;
 
     // Movement
     public float speed;
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        render = rb.GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -59,5 +61,8 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collider)
     {
         isGrounded = true;
+
+        Material hitMaterial = collider.transform.GetComponent<Renderer>().material;
+        render.material = hitMaterial;
     }
 }
