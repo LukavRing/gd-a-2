@@ -21,7 +21,7 @@
 
 # Visual Studio cache directory
 .vs/
-
+"Unity project/"
 # Gradle cache directory
 .gradle/
 
