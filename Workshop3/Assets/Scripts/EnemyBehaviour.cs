@@ -9,14 +9,17 @@ public class EnemyBehaviour : MonoBehaviour
     private NavMeshAgent myAgent;
     public GameObject[] wanderPoints;
     private Transform headingPoint;
-
+    
+    public GameObject player;
+    
     public float counterTime = 5f;
     float counter = 0f;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         myAgent = GetComponent<NavMeshAgent>();
         wanderPoints = GameObject.FindGameObjectsWithTag("WanderPoint");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     // Update is called once per frame
     void Update()
@@ -26,7 +29,7 @@ public class EnemyBehaviour : MonoBehaviour
     public void StartWander()
     {
         myAgent = GetComponent<NavMeshAgent>();
-        setHeading();
+        setRandomHeading();
     }
     public void FixedUpdateWaner()
     {
@@ -36,14 +39,14 @@ public class EnemyBehaviour : MonoBehaviour
         counter += 1f * Time.deltaTime;
         if (counter >= counterTime)
         {
-            setHeading();
+            setRandomHeading();
             counter = 0;
         }
     }
 
     public void StartGoToPlayer()
     {
-        
+        myAgent.SetDestination(player.transform.position);
     }
 
     public void UpdateGotoPlayer()
@@ -51,10 +54,25 @@ public class EnemyBehaviour : MonoBehaviour
         
     }
 
-    private void setHeading()
+    public void StartRun()
+    {
+    }
+
+    public void UpdateRun()
+    {
+        setRandomHeading();
+    }
+
+    private void setRandomHeading()
     {
         int choice = Random.Range(0, wanderPoints.Length -1);
         headingPoint = wanderPoints[choice].transform;
         myAgent.SetDestination(headingPoint.position);
+    }
+
+    public bool distanceToPlayer()
+    {
+        print(Vector3.Distance(player.transform.position, transform.position));
+        return Vector3.Distance(player.transform.position, transform.position) <= 10f;
     }
 }
