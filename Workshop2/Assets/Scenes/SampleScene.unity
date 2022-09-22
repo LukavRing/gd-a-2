@@ -505,6 +505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   jumpHeight: 7
+  respawnHeight: -20
 --- !u!114 &796990519
 MonoBehaviour:
   m_ObjectHideFlags: 0
