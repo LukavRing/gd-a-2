@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public Camera cam;
     private NavMeshAgent agent;
 
+    public GameObject handGrabPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,13 @@ public class PlayerMovement : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 agent.SetDestination(hit.point);
+
+                if (hit.transform.CompareTag("Grabbable"))
+                {
+                    hit.transform.position = handGrabPos.transform.position;
+                    hit.transform.parent = handGrabPos.transform;
+                }
+                
             }
         }
     }
