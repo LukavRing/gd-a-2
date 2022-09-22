@@ -10,10 +10,13 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject handGrabPos;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (hit.transform.CompareTag("Grabbable"))
                 {
+                    animator.SetTrigger("Interact");
                     hit.transform.position = handGrabPos.transform.position;
                     hit.transform.parent = handGrabPos.transform;
                 }
