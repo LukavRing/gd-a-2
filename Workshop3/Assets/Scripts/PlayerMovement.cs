@@ -10,10 +10,15 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject handGrabPos;
 
+    private Animator animator;
+
+    private Vector3 lastPos;
+
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,11 +35,23 @@ public class PlayerMovement : MonoBehaviour
 
                 if (hit.transform.CompareTag("Grabbable"))
                 {
+                    animator.SetTrigger("Interact");
                     hit.transform.position = handGrabPos.transform.position;
                     hit.transform.parent = handGrabPos.transform;
                 }
                 
             }
         }
+
+        if (transform.position != lastPos)
+        {
+            animator.SetFloat("Speed", .5f);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0f);
+        }
+
+        lastPos = transform.position;
     }
 }
