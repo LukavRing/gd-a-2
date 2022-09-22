@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
 
+    private Vector3 lastPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,5 +42,16 @@ public class PlayerMovement : MonoBehaviour
                 
             }
         }
+
+        if (transform.position != lastPos)
+        {
+            animator.SetFloat("Speed", .5f);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0f);
+        }
+
+        lastPos = transform.position;
     }
 }
