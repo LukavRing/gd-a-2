@@ -51,7 +51,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void UpdateGotoPlayer()
     {
-        
+        myAgent.SetDestination(player.transform.position);
     }
 
     public void StartRun()
